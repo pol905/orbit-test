@@ -5,16 +5,22 @@ import Libp2pbundle from "./libp2p";
 async function main() {
     const ipfs = await create({ repo: "./ipfs1", libp2p: Libp2pbundle });
     const o1 = await createInstance(ipfs, { directory: "./orbit1" });
+    document
+        .getElementById("get-pub-key")
+        .addEventListener("click", getPublicKey);
+    document.getElementById("create-db").addEventListener("click", createDB);
+    document.getElementById("open-db").addEventListener("click", openDB);
     window.ipfs = ipfs;
     window.orbitdb = o1;
 }
 
-window.getPublicKey = () => {
+const getPublicKey = () => {
     console.log(orbitdb);
     console.log(orbitdb.id);
 };
 
-window.createDB = async (pubKey) => {
+const createDB = async () => {
+    const pubKey = prompt("enter public key");
     const options = {
         accessController: {
             write: [orbitdb.identity.id, pubKey],
@@ -29,11 +35,13 @@ window.createDB = async (pubKey) => {
             .map((e) => e.payload.value)[0];
         console.log(message);
     });
+    console.log(db.address.toString());
     window.createdDB = db;
 };
 
-window.openDB = async (room) => {
-    const db = await orbitdb.eventlog(roomID);
+const openDB = async () => {
+    const room = prompt("Enter orbitdb room hash");
+    const db = await orbitdb.eventlog(room);
     await db.load();
     db.events.on("replicated", () => {
         const message = db
@@ -42,6 +50,7 @@ window.openDB = async (room) => {
             .map((e) => e.payload.value)[0];
         console.log(message);
     });
+    console.log(db.address.toString());
     window.openedDB = db;
 };
 
