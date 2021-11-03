@@ -63,7 +63,7 @@ const openDB = async () => {
 
 const sendMessage = () => {
     const message = prompt("Enter the message");
-    window.db.add();
+    window.db.add({ message: message });
 };
 
 main();
