@@ -10,6 +10,9 @@ async function main() {
         .addEventListener("click", getPublicKey);
     document.getElementById("create-db").addEventListener("click", createDB);
     document.getElementById("open-db").addEventListener("click", openDB);
+    document
+        .getElementById("send-message")
+        .addEventListener("click", sendMessage);
     window.ipfs = ipfs;
     window.orbitdb = o1;
 }
@@ -29,6 +32,7 @@ const createDB = async () => {
     const db = await orbitdb.log("room", options);
     await db.load();
     db.events.on("replicated", () => {
+        console.log("noda");
         const message = db
             .iterator()
             .collect()
@@ -36,6 +40,7 @@ const createDB = async () => {
         console.log(message);
     });
     console.log(db.address.toString());
+    window.db = db;
     window.createdDB = db;
 };
 
@@ -44,6 +49,7 @@ const openDB = async () => {
     const db = await orbitdb.eventlog(room);
     await db.load();
     db.events.on("replicated", () => {
+        console.log("here");
         const message = db
             .iterator()
             .collect()
@@ -51,7 +57,13 @@ const openDB = async () => {
         console.log(message);
     });
     console.log(db.address.toString());
+    window.db = db;
     window.openedDB = db;
+};
+
+const sendMessage = () => {
+    const message = prompt("Enter the message");
+    window.db.add();
 };
 
 main();
