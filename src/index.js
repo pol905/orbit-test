@@ -8,22 +8,27 @@ async function main() {
     document
         .getElementById("get-pub-key")
         .addEventListener("click", getPublicKey);
-    document.getElementById("create-db").addEventListener("click", createDB);
-    document.getElementById("open-db").addEventListener("click", openDB);
+    document
+        .getElementById("create-db")
+        .addEventListener("click", async () => await createDB());
+    document
+        .getElementById("open-db")
+        .addEventListener("click", async () => await openDB());
     document
         .getElementById("send-message")
-        .addEventListener("click", sendMessage);
+        .addEventListener("click", async () => await sendMessage());
     window.ipfs = ipfs;
     window.orbitdb = o1;
 }
 
 const getPublicKey = () => {
     console.log(orbitdb);
-    console.log(orbitdb.id);
+    console.log(orbitdb.identity.id);
 };
 
 const createDB = async () => {
     const pubKey = prompt("enter public key");
+    console.log("node 2:", pubKey);
     const options = {
         accessController: {
             write: [orbitdb.identity.id, pubKey],
@@ -49,7 +54,7 @@ const openDB = async () => {
     const db = await orbitdb.eventlog(room);
     await db.load();
     db.events.on("replicated", () => {
-        console.log("here");
+        console.log("loda");
         const message = db
             .iterator()
             .collect()
@@ -61,9 +66,10 @@ const openDB = async () => {
     window.openedDB = db;
 };
 
-const sendMessage = () => {
+const sendMessage = async () => {
     const message = prompt("Enter the message");
-    window.db.add({ message: message });
+    const hash = await console.log(await window.db.add({ message: message }));
+    console.log(hash);
 };
 
 main();
