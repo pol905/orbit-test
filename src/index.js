@@ -38,12 +38,12 @@ const createDB = async () => {
     await db.load();
     db.events.on("replicated", () => {
         console.log("noda");
-        const message = db
+        const { message } = db
             .iterator()
             .collect()
             .map((e) => e.payload.value)[0];
         console.log(message);
-        document.getElementById("messages").append(message[message]);
+        document.getElementById("messages").append(message);
     });
     document.getElementById("create-id").append(db.address.toString());
     window.db = db;
@@ -57,12 +57,12 @@ const openDB = async () => {
     await db.load();
     db.events.on("replicated", () => {
         console.log("loda");
-        const message = db
+        const { message } = db
             .iterator()
             .collect()
             .map((e) => e.payload.value)[0];
         console.log(message);
-        document.getElementById("messages").append(message[message]);
+        document.getElementById("messages").append(message);
     });
     console.log("Entered!");
     window.db = db;
