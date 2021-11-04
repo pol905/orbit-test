@@ -42,6 +42,7 @@ const createDB = async () => {
             .iterator()
             .collect()
             .map((e) => e.payload.value)[0];
+        console.log(message);
         document.getElementById("messages").append(message[message]);
     });
     document.getElementById("create-id").append(db.address.toString());
@@ -60,6 +61,7 @@ const openDB = async () => {
             .iterator()
             .collect()
             .map((e) => e.payload.value)[0];
+        console.log(message);
         document.getElementById("messages").append(message[message]);
     });
     console.log("Entered!");
