@@ -23,11 +23,11 @@ async function main() {
 
 const getPublicKey = () => {
     console.log(orbitdb);
-    console.log(orbitdb.identity.id);
+    document.getElementById("disp-pub").append(orbitdb.identity.id);
 };
 
 const createDB = async () => {
-    const pubKey = prompt("enter public key");
+    const pubKey = document.getElementById("in-pub-key").value;
     console.log("node 2:", pubKey);
     const options = {
         accessController: {
@@ -44,13 +44,14 @@ const createDB = async () => {
             .map((e) => e.payload.value)[0];
         console.log(message);
     });
-    console.log(db.address.toString());
+    document.getElementById("create-id").append(db.address.toString());
     window.db = db;
     window.createdDB = db;
 };
 
 const openDB = async () => {
-    const room = prompt("Enter orbitdb room hash");
+    const room = document.getElementById("db-hash").value;
+    console.log(`Entering Room: ${room}`);
     const db = await orbitdb.eventlog(room);
     await db.load();
     db.events.on("replicated", () => {
@@ -61,14 +62,14 @@ const openDB = async () => {
             .map((e) => e.payload.value)[0];
         console.log(message);
     });
-    console.log(db.address.toString());
+    console.log("Entered!");
     window.db = db;
     window.openedDB = db;
 };
 
 const sendMessage = async () => {
-    const message = prompt("Enter the message");
-    const hash = await console.log(await window.db.add({ message: message }));
+    const message = document.getElementById("msg").value;
+    const hash = await window.db.add({ message: message });
     console.log(hash);
 };
 

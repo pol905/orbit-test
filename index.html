@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <button id="get-pub-key">Print Public Key</button>
-    <button id="create-db">Create DB</button>
-    <button id="open-db">Open DB</button>
-    <button id="send-message">Send Message</button>
-    <script type="module" src="./src/index.js"></script>
+    <body>
+        <p id="disp-pub">Public Key:</p>
+        <button id="get-pub-key">Print Public Key</button>
+        <p>Enter node-2's public key</p>
+        <input type="text" placeholder="Enter public Key" id="in-pub-key" />
+        <button id="create-db">Create DB</button>
+        <p id="create-id">DB Hash:</p>
+        <p>Enter the DB hash</p>
+        <input type="text" placeholder="Enter DB hash" id="db-hash" />
+        <button id="open-db">Open DB</button>
+        <p>Enter the message to be sent</p>
+        <input type="text" placeholder="message...." id="msg" />
+        <button id="send-message">Send Message</button>
+        <p id="messages"></p>
+        <script type="module" src="./src/index.js"></script>
+    </body>
 </html>
