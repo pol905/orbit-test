@@ -38,10 +38,9 @@ const createDB = async () => {
     await db.load();
     db.events.on("replicated", () => {
         console.log("noda");
-        const { message } = db
-            .iterator()
-            .collect()
-            .map((e) => e.payload.value)[-1];
+        const n = db.iterator().collect();
+        console.log(n);
+        const { message } = n[n.length - 1].payload.value;
         console.log(message);
         document.getElementById("messages").append(message);
     });
@@ -57,10 +56,9 @@ const openDB = async () => {
     await db.load();
     db.events.on("replicated", () => {
         console.log("loda");
-        const { message } = db
-            .iterator()
-            .collect()
-            .map((e) => e.payload.value)[-1];
+        const n = db.iterator().collect();
+        console.log(n);
+        const { message } = n[n.length - 1].payload.value;
         console.log(message);
         document.getElementById("messages").append(message);
     });
